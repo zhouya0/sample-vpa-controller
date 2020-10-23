@@ -25,9 +25,9 @@ func (v *VPAController) VerticalHorizonScaleForOnePod(podName string, podNamespa
 	if err != nil {
 		return err
 	}
-	if !podCanVPA(pod) {
-		return fmt.Errorf("pod can't do vertical scaling")
-	}
+	//if !podCanVPA(pod) {
+	//	return fmt.Errorf("pod can't do vertical scaling")
+	//}
 	specCPU := calculatePodResourceLimit(pod, v1.ResourceCPU)
 	specMemory := calculatePodResourceLimit(pod, v1.ResourceMemory)
 	currentCPUs, _, err := v.metricsClient.GetResourceMetric(v1.ResourceCPU, podNamespace, labels.Nothing())
@@ -53,6 +53,8 @@ func (v *VPAController) VerticalHorizonScaleForOnePod(podName string, podNamespa
 	return nil
 }
 
+// panic: interface conversion: runtime.Object is *v1.Pod, not *core.Pod
+// Don't use this logic for now
 func podCanVPA(obj runtime.Object) bool {
 	pod := obj.(*core.Pod)
 	qosClass := qos.GetPodQOS(pod)

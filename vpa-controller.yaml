@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vpa
+  namespace: kube-system
+  labels:
+    apps: vpa
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      apps: vpa
+  template:
+    metadata:
+      labels:
+        apps: vpa
+    spec:
+      serviceAccount: dce-admin
+      priorityClassName: system-cluster-critical
+      containers:
+        - name: vpa
+          image: daocloud.io/dcelib/vpa-controller:v1.0.0
+          imagePullPolicy: Always
+          args:
+            - vpa
+          resources:
+            limits:
+              cpu: "400m"
+              memory: "500Mi"
+            requests:
+              cpu: "100m"
+              memory: "250Mi"
