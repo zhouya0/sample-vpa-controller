@@ -22,7 +22,7 @@ func main() {
 	}
 
 	for {
-		err := vpaController.VerticalHorizonScaleForOnePod("test", "default", 0, 0)
+		err := vpaController.VerticalHorizonScaleForOnePod("test", "default", 2, 0.8)
 		if err != nil {
 			klog.Fatalf("vpa failed: %v", err)
 			break
